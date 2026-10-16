@@ -1,0 +1,14 @@
+{
+  "name": "MB Your School Coach",
+  "short_name": "MB Coach",
+  "description": "Coaching scolaire pour les 6–20 ans, à Bruxelles et en ligne.",
+  "start_url": "./",
+  "display": "browser",
+  "background_color": "#fdfcff",
+  "theme_color": "#fdfcff",
+  "lang": "fr-BE",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
