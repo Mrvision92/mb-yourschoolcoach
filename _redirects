@@ -1,8 +1,8 @@
 # Redirections 301 de l'ancien site WordPress/WooCommerce (Netlify / Cloudflare Pages).
 # Équivalent Apache : docs/SEO-REDIRECTIONS.md
 /product/coaching-individuel-one-to-one/   /coachings/individuel/      301
-/product/coaching-de-groupe-ou-en-binome/  /coachings/groupe-binome/   301
-/product/coaching-en-ligne/                /coachings/en-ligne/        301
+/product/coaching-de-groupe-ou-en-binome/  /coachings/duo/   301
+/product/coaching-en-ligne/                /coachings/   301
 /product-category/coaching/                /coachings/                 301
 /shop/                                     /coachings/                 301
 /book-appointment/                         /reservation/               301
