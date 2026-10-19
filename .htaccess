@@ -1,0 +1,53 @@
+# MB Your School Coach — site statique (Hostinger / LiteSpeed / Apache)
+# Voir docs/MISE-EN-LIGNE.md. Sans effet sur Netlify ou Cloudflare (qui utilisent _redirects et _headers).
+
+Options -Indexes
+DirectoryIndex index.html
+ErrorDocument 404 /404.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Adresse officielle : HTTPS, sans « www »
+  RewriteCond %{HTTPS} off [OR]
+  RewriteCond %{HTTP_HOST} ^www\. [NC]
+  RewriteRule ^ https://mbyourschoolcoach.be%{REQUEST_URI} [R=301,L]
+
+  # Anciennes adresses WordPress / WooCommerce → nouvelles pages (301)
+  RewriteRule ^product/coaching-individuel-one-to-one/?$ /coachings/individuel/ [R=301,L]
+  RewriteRule ^product/coaching-de-groupe-ou-en-binome/?$ /coachings/duo/ [R=301,L]
+  RewriteRule ^product/coaching-en-ligne/?$ /coachings/ [R=301,L]
+  RewriteRule ^(product-category/coaching|shop)/?$ /coachings/ [R=301,L]
+  RewriteRule ^(book-appointment|my-bookings|my-account|cart|checkout|thank-you|cancel-appointment|cancel-payment|appointment-cancellation-confirmation|appointment-reschedule|bookingpress-complete-payment)/?$ /reservation/ [R=301,L]
+  RewriteRule ^privacy-policy/?$ /confidentialite/ [R=301,L]
+  RewriteRule ^testimonial/.*$ /temoignages/ [R=301,L]
+  RewriteRule ^(hello-world|sample-page)/?$ / [R=301,L]
+  RewriteRule ^(category|author|elementor-hf|feed)(/.*)?$ / [R=301,L]
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; media-src 'self'; connect-src 'self' https://api.web3forms.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "DENY"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+  Header always set Cross-Origin-Opener-Policy "same-origin"
+
+  # Cache : fichiers versionnés d'Astro (nom unique) = 1 an ; HTML toujours revalidé
+  <FilesMatch "\.(js|css|woff2|avif|webp|png|jpg|svg)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+  <FilesMatch "\.(html)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType video/mp4 "access plus 30 days"
+</IfModule>
+
+AddType video/mp4 .mp4
+AddType image/avif .avif
+AddType application/manifest+json .webmanifest
